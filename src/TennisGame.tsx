@@ -1,8 +1,8 @@
-import { Player } from "./Interfaces/Interfaces";
+import { Player } from "./Player";
 
 export class TennisGame {
-  /*  player1 : Player;
-    player2 : Player; */
+  player1: Player;
+  player2: Player;
   points: string[] = [
     "Love",
     "Fifteen",
@@ -11,45 +11,43 @@ export class TennisGame {
     "Deuce",
     "Advantage",
   ];
-  player1Name: string;
-  player1Puntacion: string;
-  player2Name: string;
-  player2Puntacion: string;
 
   constructor(player1Name: string, player2Name: string) {
-    this.player1Name = player1Name;
-    this.player1Puntacion = this.points[0];
-    this.player2Name = player2Name;
-    this.player2Puntacion = this.points[0];
+    this.player1 = new Player(player1Name, this.points[0]);
+    this.player2 = new Player(player2Name, this.points[0]);
   }
 
   wonPoint(playerName: string): void {
-    if (this.player1Name === playerName) {
-      this.player1Puntacion = this.setPoint(this.player1Puntacion);
+    if (this.player1.getName() === playerName) {
+      this.player1.setPoints(this.setPoint(this.player1.getPoints()));
     } else {
-      this.player2Puntacion = this.setPoint(this.player2Puntacion);
+      this.player2.setPoints(this.setPoint(this.player2.getPoints()));
     }
     this.comprobarPoint();
   }
 
   private comprobarPoint() {
-    if (this.player2Puntacion === this.player1Puntacion) {
-      if (this.player1Puntacion === "Forty") {
-        this.player1Puntacion = this.setPoint(this.player1Puntacion);
-        this.player2Puntacion = this.setPoint(this.player2Puntacion);
-      } else if (this.player2Puntacion === "Advantage") {
-        this.player1Puntacion = this.setPointAdvantage(this.player1Puntacion);
-        this.player2Puntacion = this.setPointAdvantage(this.player2Puntacion);
+    if (this.player2.getPoints() === this.player1.getPoints()) {
+      if (this.player1.getPoints() === "Forty") {
+        this.player1.setPoints(this.setPoint(this.player1.getPoints()));
+        this.player2.setPoints(this.setPoint(this.player2.getPoints()));
+      } else if (this.player1.getPoints() === "Advantage") {
+        this.player1.setPoints(
+          this.setPointAdvantage(this.player1.getPoints())
+        );
+        this.player2.setPoints(
+          this.setPointAdvantage(this.player2.getPoints())
+        );
       }
     } else if (
-      this.player1Puntacion === "Deuce" ||
-      this.player2Puntacion === "Deuce"
+      this.player1.getPoints() === "Deuce" ||
+      this.player2.getPoints() === "Deuce"
     ) {
       for (let i: number = 0; i <= 2; i++) {
-        if (this.player1Puntacion === this.points[i]) {
-          this.player2Puntacion = "Win";
-        } else if (this.player2Puntacion === this.points[i]) {
-          this.player1Puntacion = "Win";
+        if (this.player1.getPoints() === this.points[i]) {
+          this.player2.setPoints("Win");
+        } else if (this.player2.getPoints() === this.points[i]) {
+          this.player1.setPoints("Win");
         }
       }
     }
@@ -76,35 +74,35 @@ export class TennisGame {
   getScore(): string {
     let score: string;
     if (
-      this.player1Puntacion === this.player2Puntacion &&
-      this.player2Puntacion !== "Deuce"
+      this.player1.getPoints() === this.player2.getPoints() &&
+      this.player1.getPoints() !== "Deuce"
     ) {
-      score = this.player2Puntacion + " all";
+      score = this.player1.getPoints() + " all";
     } else if (
-      this.player1Puntacion === this.player2Puntacion &&
-      this.player2Puntacion === "Deuce"
+      this.player1.getPoints() === this.player2.getPoints() &&
+      this.player1.getPoints() === "Deuce"
     ) {
-      score = this.player2Puntacion;
+      score = this.player2.getPoints();
     } else if (
-      this.player2Puntacion === "Advantage" ||
-      this.player1Puntacion === "Advantage"
+      this.player1.getPoints() === "Advantage" ||
+      this.player2.getPoints() === "Advantage"
     ) {
-      if (this.player2Puntacion === "Advantage") {
-        score = this.player2Puntacion + " " + this.player2Name;
+      if (this.player1.getPoints() === "Advantage") {
+        score = this.player1.getPoints() + " " + this.player1.getName();
       } else {
-        score = this.player1Puntacion + " " + this.player1Name;
+        score = this.player2.getPoints() + " " + this.player2.getName();
       }
     } else if (
-      this.player2Puntacion === "Win" ||
-      this.player1Puntacion === "Win"
+      this.player1.getPoints() === "Win" ||
+      this.player2.getPoints() === "Win"
     ) {
-      if (this.player2Puntacion === "Win") {
-        score = this.player2Puntacion + " " + this.player2Name;
+      if (this.player1.getPoints() === "Win") {
+        score = this.player1.getPoints() + " " + this.player1.getName();
       } else {
-        score = this.player1Puntacion + " " + this.player1Name;
+        score = this.player2.getPoints() + " " + this.player2.getName();
       }
     } else {
-      score = this.player1Puntacion + " - " + this.player2Puntacion;
+      score = this.player1.getPoints() + " - " + this.player2.getPoints();
     }
     console.log(score);
     return score;
