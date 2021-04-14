@@ -1,6 +1,5 @@
 import React from "react";
-import { TennisGame } from "./TennisGame";
-import "bootstrap/dist/css/bootstrap.css";
+import { TennisGame } from "./Clases/TennisGame";
 
 export const FromTennis = () => {
   const [player1Name, setPlayer1Name] = React.useState("");
@@ -32,7 +31,7 @@ export const FromTennis = () => {
     }
 
     // @ts-ignore: Object is possibly 'null'.
-    rootElement.innerHTML = element;
+    rootElement.innerHTML += element + "<br />";
   }
 
   function playerWin()
@@ -56,18 +55,16 @@ export const FromTennis = () => {
 
   if (playGame) {
     return (
-      <div className="container">
+      <div>
         <h2>TENNIS GAME</h2>
         <form onSubmit={handleSumbit}>
-          <div className="row">
-            <div className="col-6">
+          <div>
+            <div>
               <label>Player 1</label>
-              <br />
               <input type="text" name="player1Name" required={true} />
             </div>
-            <div className="col-6">
+            <div>
               <label>Player 2</label>
-              <br />
               <input type="text" name="player2Name" required={true} />
             </div>
           </div>
