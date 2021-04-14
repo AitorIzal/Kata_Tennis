@@ -1,5 +1,6 @@
 import React from "react";
 import { TennisGame } from "./TennisGame";
+import "bootstrap/dist/css/bootstrap.css";
 
 export const FromTennis = () => {
   const [player1Name, setPlayer1Name] = React.useState("");
@@ -55,16 +56,18 @@ export const FromTennis = () => {
 
   if (playGame) {
     return (
-      <div>
+      <div className="container">
         <h2>TENNIS GAME</h2>
         <form onSubmit={handleSumbit}>
-          <div>
-            <div>
+          <div className="row">
+            <div className="col-6">
               <label>Player 1</label>
+              <br />
               <input type="text" name="player1Name" required={true} />
             </div>
-            <div>
+            <div className="col-6">
               <label>Player 2</label>
+              <br />
               <input type="text" name="player2Name" required={true} />
             </div>
           </div>
