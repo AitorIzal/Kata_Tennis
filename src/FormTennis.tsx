@@ -1,70 +1,68 @@
-import React from "react";
 import { TennisGame } from "./Clases/TennisGame";
+import "bootstrap/dist/css/bootstrap.css";
+import { useState } from "react";
 
 export const FromTennis = () => {
-  const [player1Name, setPlayer1Name] = React.useState("");
-  const [player2Name, setPlayer2Name] = React.useState("");
-  const [playGame, setPlayGame] = React.useState(true);
+  const [player1Name, setPlayer1Name] = useState("");
+  const [player2Name, setPlayer2Name] = useState("");
+  const [playGame, setPlayGame] = useState(true);
   const tennisGame = new TennisGame(player1Name, player2Name);
-  const [win, setWin] = React.useState(false);
+  const [win, setWin] = useState(false);
 
   function handleSumbit(event: any) {
-      event.preventDefault();
+    event.preventDefault();
 
-      setPlayer1Name(event.target.elements.player1Name.value);
-      setPlayer2Name(event.target.elements.player2Name.value);
-      setPlayGame(false);
+    setPlayer1Name(event.target.elements.player1Name.value);
+    setPlayer2Name(event.target.elements.player2Name.value);
+    setPlayGame(false);
   }
 
-  function newGame(){
-      setPlayGame(true);
+  function newGame() {
+    setPlayGame(true);
   }
 
-  function getScore()
-  {
+  function getScore() {
     const rootElement = document.getElementById("score");
     const element = tennisGame.getScore();
 
-    if(element.includes("Win"))
-    {
-        playerWin();
+    if (element.toString().includes("Win")) {
+      playerWin();
     }
 
     // @ts-ignore: Object is possibly 'null'.
     rootElement.innerHTML += element + "<br />";
   }
 
-  function playerWin()
-  {
-      setWin(true);
+  function playerWin() {
+    setWin(true);
   }
 
-  function player1WonPoint(event : any)
-  {
+  function player1WonPoint(event: any) {
     event.preventDefault();
-      tennisGame.wonPoint(player1Name);
-      getScore();
+    tennisGame.wonPoint(player1Name);
+    getScore();
   }
 
-  function player2WonPoint(event : any)
-  {
+  function player2WonPoint(event: any) {
     event.preventDefault();
-      tennisGame.wonPoint(player2Name);
-      getScore();
+    tennisGame.wonPoint(player2Name);
+    getScore();
   }
 
   if (playGame) {
     return (
-      <div>
+      <div className="container-fluid col-8">
         <h2>TENNIS GAME</h2>
         <form onSubmit={handleSumbit}>
-          <div>
-            <div>
+          <div className="row">
+            <div className="col-6">
               <label>Player 1</label>
+              <br />
               <input type="text" name="player1Name" required={true} />
             </div>
-            <div>
+            <div className="col-6">
               <label>Player 2</label>
+              <br />
               <input type="text" name="player2Name" required={true} />
             </div>
           </div>
@@ -77,22 +75,31 @@ export const FromTennis = () => {
     );
   } else {
     return (
-      <div>
+      <div className="container-fluid col-8">
         <h2>TENNIS GAME</h2>
         <form onSubmit={newGame}>
-          <div>
-            <div>
+          <div className="row">
+            <div className="col-4">
               <label>{player1Name}</label>
               <br />
-              <button onClick={player1WonPoint} disabled={Boolean(win)}>Won point</button>
+              <button onClick={player1WonPoint} disabled={win}>
+                Won point
+              </button>
             </div>
-            <div id="score">
+            <div className="col-4">
+              <div>
+                Love all
+                <br />
+              </div>
+              <div id="score"></div>
+            </div>
 
-            </div>
-            <div>
-            <label>{player2Name}</label>
-            <br />
-            <button onClick={player2WonPoint} disabled={Boolean(win)}>Won point</button>
+            <div className="col-4">
+              <label>{player2Name}</label>
+              <br />
+              <button onClick={player2WonPoint} disabled={win}>
+                Won point
+              </button>
             </div>
           </div>
           <br />

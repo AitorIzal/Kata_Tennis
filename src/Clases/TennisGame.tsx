@@ -29,8 +29,8 @@ export class TennisGame {
   private comprobarPoint() {
     if (this.player2.getPoints() === this.player1.getPoints()) {
       if (this.player1.getPoints() === "Forty") {
-        this.player1.setPoints(this.setPoint(this.player1.getPoints()));
-        this.player2.setPoints(this.setPoint(this.player2.getPoints()));
+        this.wonPoint(this.player1.getName());
+        this.wonPoint(this.player2.getName());
       } else if (this.player1.getPoints() === "Advantage") {
         this.player1.setPoints(
           this.setPointAdvantage(this.player1.getPoints())

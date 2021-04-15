@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.container-fluid {
+  background-color: #61dafb;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
